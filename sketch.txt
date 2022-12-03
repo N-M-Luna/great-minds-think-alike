@@ -1,0 +1,89 @@
+GREAT MINDS THINK ALIKE
+
+WELCOME
+
+h1 Great Minds Think Alike
+> x seconds after the page loades, element slides up and out of screen
+> x seconds after the p.animation ends, element slides up into the screen
+> loop again?
+
+p This is how you play... 
+> x after the h1.hide animation ends, element slides up and scrolls away.
+
+button Start Game
+> when clicked, hides the welcome screen and brings up the Pick Your Team screen
+
+PICK YOUR TEAMS
+
+img mascot is obviously a cat
+> once page loads, mascot does a little wiggle *****repeat every time we change screens
+> after img.animation ends, a wild div appears ******
+
+div dialog box
+  p prompt to fill out forms
+> once div is visible, p is fades in left to right ******* 
+
+form pick your team-name, number of players, team-color
+> validate, names should be 3-15 chars long
+> have suggestions
+
+button Ready?
+> when clicked, changes to ready!
+
+form for second team
+
+button for second team
+
+> When both Ready buttons are clicked, hide Pick Your Team screen and bring up the Start Game screen
+> Build player objects with name and points attributes
+
+START GAME
+
+img mascot
+
+div dialog box
+ p instructions: grab pen and paper. in each turn, this will happen... Points are counted as follows. Whichever team has the most points wins.  
+> after page loads, p appears left to right
+
+button OK
+> hides Start Game screen and brings up Start Round screen and score board (also shows round #)
+> start game logic loop-- including counters: round (=loop index), shuffle question bank
+
+START ROUND
+
+img mascot
+
+div dialog box
+  p team ${(i%2)+1}, you're up. Eveyone has x seconds to answer the question. No peeking.
+
+button start round ${i}
+> hide Start Round screen and  bring up question screen
+
+QUESTION
+
+p question[i]
+
+div timer
+> counts down to 0
+
+>after the x seconds, hide the Question screen and bring up the Tally screen
+
+TALLY
+
+img mascot
+
+div dialog box
+  p how many great minds thought alike?
+
+form
+  input (number type)
+  button
+>once the form is submitted, add the input value to team${(i%2)+1}.score, hide the Tally screen, and 
+...if it's not the last iteration of the game logic loop bring up the Start Round screen; else bring up the End Game screen.
+
+END GAME
+
+img mascot
+
+div dialog box
+  p Good game, everyone....and the winner is...

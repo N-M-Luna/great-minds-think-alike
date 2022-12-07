@@ -11,15 +11,13 @@
     <div class="welcome-screen">
         <h1>Great Minds Think Alike</h1>
 
-        <p>This is how you play...</p>
+        <p class="welcome-msg">This is how you play...</p>
         
-        <button>Start Game</button>
+        <button class="welcome-btn">Start Game</button>
     </div> <!--END WELCOME SCREEN-->
 
     <!--TEAMS SCREEN-->
-    <div class="team-screen">
-
-        <img src="" alt="mascot-img">
+    <div class="team-screen hidden">
 
         <div class="dialog-box">
             <p>Pick your teams...</p>
@@ -37,9 +35,7 @@
     </div> <!--END TEAMS SCREEN-->
 
     <!--START GAME SCREEN-->
-    <div class="star-game-screen">
-
-        <img src="" alt="mascot-img">
+    <div class="start-game-screen hidden">
 
         <div class="dialog-box">
             <p>Grab a pen and paper, everyone...</p>
@@ -52,9 +48,7 @@
     </div><!--END START GAME SCREEN-->
 
     <!--START ROUND SCREEN-->
-    <div class="start-round-screen">
-
-        <img src="" alt="mascot-img">
+    <div class="start-round-screen hidden">
 
         <div class="dialog-box">
             <p>Team <span class="team-in-turn"></span>, you're up!</p>
@@ -65,14 +59,13 @@
     </div><!--END START ROUND SCREEN-->
 
     <!--QUESTION SCREEN-->
-    <div class="question-screen">
+    <div class="question-screen hidden">
         <p class="question"></p>
         <div class="timer"></div>
     </div><!--END QUESTION SCREEN-->
 
     <!--TALLY SCREEN-->
-    <div class="tally-screen">
-        <img src="" alt="mascot-img">
+    <div class="tally-screen hidden">
 
         <div class="dialog-box">
             <p>How many great minds thought alike?</p>
@@ -86,8 +79,7 @@
     </div><!--END TALLY SCREEN-->
 
     <!--GAME OVER SCREEN-->
-    <div class="game-over-screen">
-        <img src="" alt="mascot-img">
+    <div class="game-over-screen hidden">
 
         <div class="dialog-box">
             <p>Great game eveyone!</p>
@@ -95,6 +87,8 @@
         </div>
     </div><!--END GAME OVER SCREEN-->
 
+    <img src="" alt="mascot-img">
+    
 	<script src="game.js"></script>
   </body>
 </html>

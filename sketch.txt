@@ -81,7 +81,7 @@ form
 >once the form is submitted, add the input value to team${(i%2)+1}.score, hide the Tally screen, and 
 ...if it's not the last iteration of the game logic loop bring up the Start Round screen; else bring up the End Game screen.
 
-END GAME
+GAME OVER
 
 img mascot
 

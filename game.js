@@ -5,6 +5,7 @@
 const welcomeScreen = document.querySelector('.welcome-screen')
 const teamScreen = document.querySelector('.team-screen')
 const startGameScreen = document.querySelector('.start-game-screen')
+const startRoundScreen = document.querySelector('.start-round-screen')
 
 //Functions for switching between screens
 function xOutOf(screenElement) {
@@ -95,5 +96,49 @@ function checkValidation(e){
     return formIsValid
 }
 */
+
+//SCOREBOARD element
+
+const scoreboard = document.querySelector('.scoreboard')
+const rndDisplay = document.querySelector('.rnd')
+const player1Display = document.querySelector('.player1')
+const player2Display = document.querySelector('.player2')
+const score1Display = document.querySelector('.score1')
+const score2Display = document.querySelector('.score2')
+
+function putUpScoreBoard() {
+    scoreboard.classList.remove('hidden')
+    player1Display.innerHTML = teams[0].name
+    player2Display.innerHTML = teams[1].name
+    rndDisplay.innerHTML = `${roundCounter}`
+}
+
+function updateScoreBoard() {
+    score1Display.innerHTML = teams[0].score
+    score2Display.innerHTML = teams[1].score
+}
+
+//START GAME screen
+
+//Click on the button to start the game
+let roundCounter
+const startGameBtn = document.querySelector('.start-game-screen button')
+const currentTeam = document.querySelector('.team-in-turn')
+const nextRound = document.querySelector('.next-round')
+startGameBtn.addEventListener('click', () => {
+    //Start game-round counter
+    roundCounter = 0
+
+    //Shuffle question bank
+
+    //Start next round
+    xOutOf(startGameScreen)
+    currentTeam.innerHTML = teams[roundCounter%2].name
+    nextRound.innerHTML = roundCounter+1
+    bringUp(startRoundScreen)
+    putUpScoreBoard()
+})
+
+
 
 })();

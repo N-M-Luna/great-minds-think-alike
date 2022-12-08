@@ -131,14 +131,24 @@ startGameBtn.addEventListener('click', () => {
 
     //Shuffle question bank
 
-    //Start next round
-    xOutOf(startGameScreen)
+    //Write team names on scoreboard and round counter in start round button
     currentTeam.innerHTML = teams[roundCounter%2].name
     nextRound.innerHTML = roundCounter+1
+
+    //Start next round
+    xOutOf(startGameScreen)
     bringUp(startRoundScreen)
     putUpScoreBoard()
 })
 
+//START ROUND screen
+
+const startRoundBtn = document.querySelector('.start-game-screen button')
+startRoundBtn.addEventListener('click', () => {
+    //write the question
+    //update scoreboard's round
+    //hide Start Round screen and  bring up question screen
+})
 
 
 })();

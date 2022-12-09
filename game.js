@@ -91,6 +91,7 @@ const startGameScreen = document.querySelector('.start-game-screen')
 const startRoundScreen = document.querySelector('.start-round-screen')
 const questionScreen = document.querySelector('.question-screen')
 const tallyScreen = document.querySelector('.tally-screen')
+const gameOverScreen = document.querySelector('.game-over-screen')
 
 //Functions for switching between screens
 function xOutOf(screenElement) {
@@ -128,9 +129,9 @@ welcomeBtn.addEventListener('click', () => {
 
 //Team class definition
 class Team {
-    constructor(name) {
+    constructor(name, points = 0) {
         this.name = name;
-        this.points = 0;
+        this.points = points;
     } 
 }
 
@@ -205,10 +206,22 @@ function updateScoreBoard() {
 
 //START GAME screen
 
+//Start game counter
+let roundCounter= 0
+const maxRounds = 4
+let questionQueue
+let teamInTurn
+
 //Shuffle a la fisher yates
-const shuffleArray = array => {
+function shuffleArray(array) {
+
+    //For each element (last to the first),
     for (let i = array.length - 1; i > 0; i--) {
+
+        //Get a random element with a smaller index,
       const j = Math.floor(Math.random() * (i + 1));
+
+      //And swap them.
       const temp = array[i];
       array[i] = array[j];
       array[j] = temp;
@@ -217,17 +230,12 @@ const shuffleArray = array => {
   }
 
 //Click on the button to start the game
-let roundCounter, questionQueue
-const maxRounds = 16
 const startGameBtn = document.querySelector('.start-game-screen button')
 const currentTeam = document.querySelector('.team-in-turn')
 const nextRound = document.querySelector('.next-round')
-
 startGameBtn.addEventListener('click', () => {
-    //Start game-round counter
-    //roundCounter = 0
 
-    //Shuffle question bank 
+    //Shuffle question bank
     questionQueue = shuffleArray(questionBank)
 
     //Write team names on scoreboard and round counter in start round button
@@ -272,15 +280,35 @@ startRoundBtn.addEventListener('click', () => {
 
 //TALLY screen
 
-//target the form
+//Target the tally form and its input
+const tallyForm = document.querySelector('.tally-screen form')
+const tally = document.querySelector('#tally')
 
-//on submit,
-//the input (number type) is added to the team in turn's score
-//hide the Tally screen
-//if round counter < max rounds,
-// bring up the Start Round screen
-//else 
-// bring up the Game Over screen.
+//User submits their team's score for the current round.
+tallyForm.addEventListener('submit', (e) => {
+        e.preventDefault()
 
+        //Check that the score isn't a negative number...?
+        if (1) { //if (checkValidation(e)) {
+
+            //The input (number type) is added to the team in turn's score
+            teams[roundCounter%2].points += tally.value
+            updateScoreBoard()
+
+            //hide the Tally screen
+            xOutOf(tallyScreen)
+
+            //If we're not on the last round, start the next one
+            if(roundCounter < maxRounds) {
+                nextRound.innerHTML = roundCounter+1
+                bringUp(startRoundScreen)
+            } else {
+                //If it's the last round, bring up the game over screen
+                bringUp(gameOverScreen)
+            }
+        } else {
+            tallyForm.reportValidity()
+        }
+})
 
 //})();

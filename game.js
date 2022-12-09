@@ -158,7 +158,7 @@ for (let i = 0; i < 2; i++) {
             }
 
         } else {
-            formElem.reportValidity()
+            teamForms.reportValidity()
         }
     })
 }
@@ -200,8 +200,8 @@ function putUpScoreBoard() {
 }
 
 function updateScoreBoard() {
-    score1Display.innerHTML = teams[0].score
-    score2Display.innerHTML = teams[1].score
+    score1Display.innerHTML = teams[0].points
+    score2Display.innerHTML = teams[1].points
 }
 
 //START GAME screen
@@ -292,10 +292,13 @@ tallyForm.addEventListener('submit', (e) => {
         if (1) { //if (checkValidation(e)) {
 
             //The input (number type) is added to the team in turn's score
-            teams[roundCounter%2].points += tally.value
+            teams[roundCounter%2].points += parseInt(tally.value) 
+            //BUG -- points were undefined. Even though the tally input is type="number", the value is a string. 
+            //console.log(typeof(teams[roundCounter%2].points))
+            //console.log(typeof(tally.value))
             updateScoreBoard()
 
-            //hide the Tally screen
+            //Hide the Tally screen
             xOutOf(tallyScreen)
 
             //If we're not on the last round, start the next one

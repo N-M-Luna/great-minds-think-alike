@@ -128,8 +128,7 @@ function bringUp(screenElement) {
     screenElement.classList.remove('hidden') 
     //Extra stuff
     // Start a wiggle animation on the .mascot img 
-    // After img.animation ends, a wild div appears
-    // Once dialog div is visible, p is fades in left to right
+    // After img.animation ends, dialog div is visible, p is fades in left to right
     //This happens everytime, except when the new screen is the question screen.
 }
 
@@ -152,7 +151,6 @@ welcomeBtn.addEventListener('click', () => {
 
 //Extra stuff
 // have suggestions
-// when ready-btn is clicked, changes to ready!
 
 //Team class definition
 class Team {
@@ -160,8 +158,10 @@ class Team {
         this.name = name;
         this.points = points;
     } 
-
-    //Create method to add to their points
+    //Create prototype method to add to the team's points
+    addPoints(n) {
+        this.points += n
+    }
 }
 
 //Create teams with user input
@@ -238,7 +238,7 @@ function updateScoreBoard() {
 //START GAME screen
 
 //Start game counter
-//Can turn these into 
+//Can (Should?) turn these into private variables
 let roundCounter= 0
 const maxRounds = 4
 let questionQueue
@@ -323,11 +323,14 @@ tallyForm.addEventListener('submit', (e) => {
         //Check that the score isn't a negative number...?
         if (1) { //if (checkValidation(e)) {
 
-            //The input (number type) is added to the team in turn's score
-            teams[roundCounter%2].points += parseInt(tally.value) 
+            //Grab the freshly scored points
+            const newPoints = parseInt(tally.value) 
             //BUG -- points were undefined. Even though the tally input is type="number", the value is a string. 
             //console.log(typeof(teams[roundCounter%2].points))
             //console.log(typeof(tally.value))
+
+            //The input (number type) is added to the team in turn's score
+            teams[roundCounter%2].addPoints(newPoints)
             updateScoreBoard()
 
             //Hide the Tally screen

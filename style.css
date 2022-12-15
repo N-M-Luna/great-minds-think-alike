@@ -21,15 +21,6 @@ body {
     text-align: center;
 }
 
-a {
-    color: rgb(1, 0, 0);
-    text-decoration: underline;
-}
-
-.credits {
-    color:rgb(1, 0, 0)
-}
-
 button {
     background-color: rgb(134, 145, 248);
     border: none;
@@ -58,8 +49,18 @@ button:hover {
     width: 80%;
 }
 
+a {
+    color: rgb(1, 0, 0);
+    text-decoration: underline;
+}
+
+.credits {
+    color:rgb(1, 0, 0)
+}
+
 /* Start screen */
 h1 {
+    font-size: 3rem;
     margin: 80px auto;
 }
 

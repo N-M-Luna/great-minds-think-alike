@@ -267,12 +267,28 @@ tallyForm.addEventListener('submit', (e) => {
                 bringUp(startRoundScreen)
                 tallyForm.reset()
             } else {
-                //If it's the last round, bring up the game over screen
+
+                //If it's the last round, calculate the winner,
+                const winner = calculateWinner()
+
+                //write it to the game over screen, 
+                const winnerDisplay = document.querySelector('.winner')
+                winnerDisplay.innerHTML = winner
+                
+                //and bring up the game over screen
                 bringUp(gameOverScreen)
             }
         } else {
             tallyForm.reportValidity()
         }
 })
+
+function calculateWinner() {
+    if (teams[0].points > teams[1].points) {
+        return teams[0].name
+    } else {
+        return teams[1].name
+    }
+}
 
 //})();

@@ -7,11 +7,14 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+
+    <div class="head-div"> </div>
+
     <!--WELCOME SCREEN-->
     <div class="welcome-screen">
         <h1>Great Minds Think Alike</h1>
 
-        <p>This is how you play...</p>
+        <p class="hidden">This is how you play...</p>
         
         <button class="welcome-btn">Start Game</button>
     </div> <!--END WELCOME SCREEN-->
@@ -20,17 +23,17 @@
     <div class="team-screen hidden">
 
         <div class="dialog-box">
-            <p>Pick your teams...</p>
+            <p>Players, pick your team!</p>
         </div>
 
         <form>
-            <label for="nameTeam1">Team name:</label> <input type="text" id="nameTeam1">
-            <input type="submit">
+            <label for="nameTeam1">Team name:</label> <input type="text" id="nameTeam1"> <br>
+            <button type="submit">Ready?</button>
         </form>
 
         <form>
-            <label for="nameTeam2">Team name:</label> <input type="text" id="nameTeam2">
-            <input type="submit">
+            <label for="nameTeam2">Team name:</label> <input type="text" id="nameTeam2"> <br>
+            <button type="submit">Ready?</button>
         </form>
     </div> <!--END TEAMS SCREEN-->
 
@@ -80,7 +83,7 @@
 
         <form action="">
             <input type="number" id="tally">
-            <button>OK</button>
+            <button type="submit">OK</button>
         </form>
 
     </div><!--END TALLY SCREEN-->
@@ -90,11 +93,16 @@
 
         <div class="dialog-box">
             <p>Great game eveyone!</p>
-            <p>And the winner is...</p>
+            <p class="drumroll hidden">And the winner is...</p>
+            <p class="winner"></p>
         </div>
     </div><!--END GAME OVER SCREEN-->
 
-    <img src="" alt="mascot-img">
+    <!--<img src="" alt="mascot-img">-->
+
+    <div class="foot-div">
+        <p class="credits">Made with love by <a href="https://github.com/N-M-Luna" target="_blank">N. M. Luna</a></p>
+    </div>
 
 	<script src="game.js"></script>
   </body>

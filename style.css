@@ -1,5 +1,72 @@
+/*
+Color scheme
+Black       rgb(1, 0, 0);
+Peach       rgb(255, 144, 90); 
+Orange      rgb(255, 142, 37);
+Red         rgb(218, 87, 90);
+Blue        rgb(134, 145, 248);
+Violet      rgb(203, 144, 196);
+*/
+
 .hidden {
     display: none;
 }
 
-/* Style for sumbit input */
+body {
+    background-color: rgb(1, 0, 0);
+    color:rgb(255, 144, 90);
+    font-family: "Lucida Console", "Courier New", monospace;
+    text-align: center;
+}
+
+a {
+    color: rgb(1, 0, 0);
+    text-decoration: underline;
+}
+
+.credits {
+    color:rgb(1, 0, 0)
+}
+
+button {
+    background-color: rgb(134, 145, 248);
+    border: none;
+    border-radius: 10px;
+    margin: 15px 0;
+    padding: 5px;
+}
+
+button:hover {
+    background-color: rgb(218, 87, 90);
+}
+
+/* Frame each screen in a LCARS-inspired interface*/
+.head-div {
+    background-color: rgb(255, 144, 90);
+    border-radius: 10px 10px 0 0;
+    height: 70px;
+    margin: 0 auto 30px;
+    width: 80%;
+}
+.foot-div {
+    background-color: rgb(255, 144, 90);
+    border-radius: 0 0 10px 10px;
+    margin: 30px auto 0;
+    padding: 10px;
+    width: 80%;
+}
+
+/* Start screen */
+h1 {
+    margin: 80px auto;
+}
+
+/* Team-picking */
+.team-screen {
+    height: 200px;
+}
+
+.team-screen form {
+    float: left;
+    padding: 10%;
+}

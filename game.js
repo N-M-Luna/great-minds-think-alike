@@ -92,12 +92,39 @@ const startRoundScreen = document.querySelector('.start-round-screen')
 const questionScreen = document.querySelector('.question-screen')
 const tallyScreen = document.querySelector('.tally-screen')
 const gameOverScreen = document.querySelector('.game-over-screen')
+const headDiv = document.querySelector('.head-div')
+const footDiv = document.querySelector('.foot-div')
 
 //Functions for switching between screens
 function xOutOf(screenElement) {
     screenElement.classList.add('hidden')
 }
 function bringUp(screenElement) {
+    //Change colors on start game screen, start round screen and tally screen, and game over screen
+    switch (screenElement) {
+        case startGameScreen:
+            headDiv.style.backgroundColor = `rgb(203, 144, 196)`;
+            footDiv.style.backgroundColor = `rgb(203, 144, 196)`;
+            document.body.style.color = `rgb(203, 144, 196)`;
+            break;
+        case startRoundScreen:
+            headDiv.style.backgroundColor = `rgb(255, 142, 37)`;
+            footDiv.style.backgroundColor = `rgb(255, 142, 37)`;
+            document.body.style.color = `rgb(255, 142, 37)`;
+            break;
+        case tallyScreen:
+            headDiv.style.backgroundColor = `rgb(134, 145, 248)`;
+            footDiv.style.backgroundColor = `rgb(134, 145, 248)`;
+            document.body.style.color = `rgb(134, 145, 248)`;
+            break;
+        case gameOverScreen:
+            headDiv.style.backgroundColor = `rgb(255, 144, 90)`;
+            footDiv.style.backgroundColor = `rgb(255, 144, 90)`;
+            document.body.style.color = `rgb(255, 144, 90)`;
+            break;
+        default:
+            break;
+    }
     screenElement.classList.remove('hidden') 
     //Extra stuff
     // Start a wiggle animation on the .mascot img 
@@ -133,6 +160,8 @@ class Team {
         this.name = name;
         this.points = points;
     } 
+
+    //Create method to add to their points
 }
 
 //Create teams with user input
@@ -144,15 +173,22 @@ for (let i = 0; i < 2; i++) {
     teamForms[i].addEventListener('submit', (e) => {
         e.preventDefault()
 
+        //Grab the name submitted by the user
+        const nameInput = document.querySelector(`#nameTeam${i+1}`)
+
         //Check if the team names are over 3 chars
-        if (1) { //if (checkValidation(e)) {
+        if (checkLength(nameInput)) {
 
             //Create a team object
-            const nameInput = document.querySelector(`#nameTeam${i+1}`)
             teams.push(new Team(nameInput.value))
+
+            //Update submit button
+            e.target.lastElementChild.innerHTML = `Ready!`
+            e.target.lastElementChild.style.backgroundColor = `rgb(218, 87, 90)`
 
             //If both teams are created, it's time to start the game
             if (teams.length > 1){
+                console.log(teams)
                 xOutOf(teamScreen)
                 bringUp(startGameScreen)
             }
@@ -163,25 +199,20 @@ for (let i = 0; i < 2; i++) {
     })
 }
 
-//Below is sample code of form validation
-/*
-function checkValidation(e){
-    let formIsValid = true //Form is valid unless one (or more) of the validations fail
-    console.log(`Validating {name: ${nameElem.value}, email: ${emailElem.value}, message: ${messageElem.value}}`)
-    console.log(`Results are in:`)
+function checkLength(nameSubmission){
+    let formIsValid = true 
     
     //Name should be at least three characters long
-    if (nameElem.value.length < 3) { 
-        nameElem.validity.valid = false
-        nameElem.setCustomValidity(`Where's the rest of your name?`)
+    if (nameSubmission.value.length < 3) { 
+        nameSubmission.validity.valid = false
+        nameSubmission.setCustomValidity(`Where's the rest of your name?`)
         formIsValid = false
     } else {
-        nameElem.validity.valid = true
-        nameElem.classList.remove('invalid')
+        nameSubmission.validity.valid = true
+        nameSubmission.classList.remove('invalid')
     }
     return formIsValid
 }
-*/
 
 //SCOREBOARD element
 
@@ -207,6 +238,7 @@ function updateScoreBoard() {
 //START GAME screen
 
 //Start game counter
+//Can turn these into 
 let roundCounter= 0
 const maxRounds = 4
 let questionQueue
@@ -305,6 +337,7 @@ tallyForm.addEventListener('submit', (e) => {
             if(roundCounter < maxRounds) {
                 nextRound.innerHTML = roundCounter+1
                 bringUp(startRoundScreen)
+                tallyForm.reset()
             } else {
                 //If it's the last round, bring up the game over screen
                 bringUp(gameOverScreen)

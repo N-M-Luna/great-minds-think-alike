@@ -15,7 +15,9 @@ Violet      rgb(203, 144, 196);
 body {
     background-color: rgb(1, 0, 0);
     color:rgb(255, 144, 90);
-    font-family: "Lucida Console", "Courier New", monospace;
+    font-family: 'Orbitron', 'Smooch Sans', sans-serif;
+    font-weight: 300;
+    /*font-family: "Lucida Console", "Courier New", monospace;*/
     text-align: center;
 }
 

@@ -1,89 +1,6 @@
 //GREAT MINDS THINK ALIKE
 //(function () {
 
-    //parking this here for now
-    const questionBank = [
-        `Name an animal that starts with the letter E.`,
-        `Name a word that rhymes with "teeny".`,
-        `Name something that gets pumped up.`,
-        `Name something you do that rhymes with "grow up."`,
-        `Name something that's easier to catch than catching a man.`,
-        `Name something to which a lot of kids seem almost addicted.`,
-        `Fill in the blank: You're in deep ____.`,
-        `Name something people ride that causes them to throw up.`,
-        `Fill in the blank: I did everything for my guy and I never got a ____.`,
-        `Name something in your refrigerator that you should thank a cow for.`,
-        `Name something that drips.`,
-        `Name something kids just love to jump on.`,
-        `Give me a three-letter word that starts with the letter "Z."`,
-        `Name something you'd do if your date took you to Chuck E. Cheese.`,
-        `Name your favorite thing to do at parties.`,
-        `Name something people say is on the house.`,
-        `Which of the Seven Dwarfs describes how you feel after a couple of drinks?`,
-        `Fill in the blank: Hold the ____.`,
-        `Roses are red. Violets are blue. What kind of flowers do cheap guys buy you?`,
-        `Name a weather condition that would be a good name for a wrestler.`,
-        `Name a word that rhymes with "will" that's associated with doctors.`,
-        `What's something that can turn an ordinary bath into a romantic one?`,
-        `Name a place that's filled with people who don't want to be there.`,
-        `Name something specific you make sure to clean before company comes over.`,
-        `Name a movie monster you think could take Dracula in a fight.`,
-        `Name an office supply you'd use to pick food out of your teeth.`,
-        `Fill in the blank: In the bedroom, my husband's superhero name would be ____ Man.`,
-        `Name something that might be referred to as a dead end.`,
-        `Name something a husband might find all over the bed that makes him suspect his wife is having an affair with a baker.`,
-        `If Batman went broke, he just might have to sell his Bat-what`,
-        `Name someplace a teenager complains about having to go.`,
-        `What's the most fun thing to do with another woman?`,
-        `Name a way eggs are prepared that could also describe a person.`,
-        `Name something specific that has a long neck.`,
-        `Name something that some people are afraid to ride on or in.`,
-        `Fill in the blank: Tongue ______.`,
-        `Name something that has the word "super" in it.`,
-        `If a man ran out of deodorant, name a fruit he might rub under his pits to hide the odor.`,
-        `Name something that comes in packs of six or 12.`,
-        `Name a US city where lots of rich people live.`,
-        `Fill in the blank: Lady _____.`,
-        `Name a way your man is like a good cut of meat.`,
-        `Fill in the blank: Having a bird poop on you is bad, but imagine how much worse it would be if ______ could fly.`,
-        `Name a good place to go when you want to cry.`,
-        `If you ran your fingers through a man's hair, what would you hate to find in it?`,
-        `Name something people deliver for a living.`,
-        `Name an animal that's easy to imitate in charades.`,
-        `After you murder someone, name something specific you must quickly get rid of.`,
-        `Name a kind of hoop.`,
-        `Tell me something you have that has lasted longer than most of your relationships.`,
-        `Give me one word you'd use to describe the last kiss your man gave you.`,
-        `What US state do you think has the most beautiful women?`,
-        `Name something that's cheap and greasy.`,
-        `Fill in the blank: My man is a love ____.`,
-        `Tell me something of yours that you swear is possessed.`,
-        `Name a kind of ball it might feel like a woman is pushing out when she gives birth.`,
-        `Name a word a dog understands.`,
-        `Give me a phrase that starts with the words, "Off the..."`,
-        `Tell me a country where you think the men are sexier than American men.`,
-        `Name something you stuff just as full as you can get it.`,
-        `If a man speaks seven languages, which one would he use when he wants to sound sexy?`,
-        `Name a good musical instrument for someone who is full of hot air.`,
-        `Give me a word that rhymes with "hustle."`,
-        `You know a guy is really into you if he kisses your what?`,
-        `Name an animal that doesn't have a leg to stand on.`,
-        `What would it be hard to do if you accidentally put on superglue instead of lipstick?`,
-        `Name an animal that might like to watch the DVD Squirrels Gone Wild.`,
-        `Name the first thing Steve Harvey would remove if he were in a game of strip poker.`,
-        `Name a place you stop going to when you're broke.`,
-        `Name something a mother might pick out for her adult son.`,
-        `If they made a Judge Judy doll, name something it might come with.`,
-        `Name something that parents can't wait for their children to get out of.`,
-        `Name a place you'd hate to find toenail clippings.`,
-        `In one word, describe the underwear your man is wearing right now.`,
-        `Name an American city where they know how to party hard.`,
-        `Name something you associate with camels.`,
-        `If Steve Harvey were your neighbor, name something of his you might ask to borrow.`,
-        `Name a place you'd hate to spend even one night.`,
-        `Name something you'd hate to have happen while you're taking a bath.`,
-        `And name something of your wife's you like to wear because it's so soft.`]
-
 //Screen elements
 const welcomeScreen = document.querySelector('.welcome-screen')
 const teamScreen = document.querySelector('.team-screen')
@@ -92,8 +9,10 @@ const startRoundScreen = document.querySelector('.start-round-screen')
 const questionScreen = document.querySelector('.question-screen')
 const tallyScreen = document.querySelector('.tally-screen')
 const gameOverScreen = document.querySelector('.game-over-screen')
+
 const headDiv = document.querySelector('.head-div')
 const footDiv = document.querySelector('.foot-div')
+//const dialogBox = document.querySelectorAll('.dialog-box')
 
 //Functions for switching between screens
 function xOutOf(screenElement) {
@@ -126,10 +45,18 @@ function bringUp(screenElement) {
             break;
     }
     screenElement.classList.remove('hidden') 
-    //Extra stuff
-    // Start a wiggle animation on the .mascot img 
-    // After img.animation ends, dialog div is visible, p is fades in left to right
-    //This happens everytime, except when the new screen is the question screen.
+
+    //If there is a .dialog-box div, un-hide each child p node after 2 seconds
+    const dialog = screenElement.childNodes[1]
+
+    if (dialog.classList.contains('dialog-box')) {
+        const pElems = dialog.children
+        for (let i = 0; i < pElems.length; i++) {
+            setTimeout(() => {
+                pElems[i].classList.remove('unwritten')
+            }, 1000);
+        }
+    }
 }
 
 //WELCOME screen
@@ -188,7 +115,6 @@ for (let i = 0; i < 2; i++) {
 
             //If both teams are created, it's time to start the game
             if (teams.length > 1){
-                console.log(teams)
                 xOutOf(teamScreen)
                 bringUp(startGameScreen)
             }

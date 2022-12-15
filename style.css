@@ -12,12 +12,15 @@ Violet      rgb(203, 144, 196);
     display: none;
 }
 
+.unwritten {
+    visibility: hidden;
+}
+
 body {
     background-color: rgb(1, 0, 0);
     color:rgb(255, 144, 90);
     font-family: 'Orbitron', 'Smooch Sans', sans-serif;
     font-weight: 300;
-    /*font-family: "Lucida Console", "Courier New", monospace;*/
     text-align: center;
 }
 
@@ -31,6 +34,10 @@ button {
 
 button:hover {
     background-color: rgb(218, 87, 90);
+}
+
+.dialog-box {
+    font-size: 2rem;
 }
 
 /* Frame each screen in a LCARS-inspired interface*/

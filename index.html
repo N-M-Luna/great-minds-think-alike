@@ -24,7 +24,7 @@
     <div class="team-screen hidden">
 
         <div class="dialog-box">
-            <p>Players, pick your team!</p>
+            <p class="unwritten">Players, pick your team!</p>
         </div>
 
         <form>
@@ -42,9 +42,9 @@
     <div class="start-game-screen hidden">
 
         <div class="dialog-box">
-            <p>Grab a pen and paper, everyone...</p>
-            <p>In each turn, ...</p>
-            <p>Points are counted as follows...</p>
+            <p class="unwritten">Grab a pen and paper, everyone!</p>
+            <p class="unwritten">In each turn, a team will get a question. <br> Each player writes down the first three things that come to mind.</p>
+            <p class="unwritten">Points are awarded based on how many people have similar answers.</p>
         </div>
 
         <button>OK</button>
@@ -62,8 +62,8 @@
     <div class="start-round-screen hidden">
 
         <div class="dialog-box">
-            <p>Team <span class="team-in-turn"></span>, you're up!</p>
-            <p>Everyone has x seconds to answer the question. No peeking!</p>
+            <p class="unwritten">Team <span class="team-in-turn"></span>, you're up!</p>
+            <p class="unwritten">Everyone has 6 seconds to answer the question. No peeking!</p>
         </div>
 
         <button>Start round <span class="next-round"></span></button>
@@ -79,7 +79,7 @@
     <div class="tally-screen hidden">
 
         <div class="dialog-box">
-            <p>How many great minds thought alike?</p>
+            <p class="unwritten">How many great minds thought alike?</p>
         </div>
 
         <form action="">
@@ -93,9 +93,9 @@
     <div class="game-over-screen hidden">
 
         <div class="dialog-box">
-            <p>Great game eveyone!</p>
-            <p class="drumroll hidden">And the winner is...</p>
-            <p class="winner"></p>
+            <p class="unwritten">Great game eveyone!</p>
+            <p class="unwritten">And the winner is...</p>
+            <p class="winner unwritten"></p>
         </div>
     </div><!--END GAME OVER SCREEN-->
 
@@ -105,6 +105,7 @@
         <p class="credits">Made with love by <a href="https://github.com/N-M-Luna" target="_blank">N. M. Luna</a></p>
     </div>
 
+    <script src="questionBank.js"></script>
 	<script src="game.js"></script>
   </body>
 </html>

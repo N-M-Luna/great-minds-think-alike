@@ -1,4 +1,4 @@
-questionBank = [
+const questionBank = [
     `Name an animal that starts with the letter E.`,
     `Name a word that rhymes with "teeny".`,
     `Name something that gets pumped up.`,

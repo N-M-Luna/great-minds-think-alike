@@ -19,7 +19,7 @@ Violet      rgb(203, 144, 196);
 body {
     background-color: rgb(1, 0, 0);
     color:rgb(255, 144, 90);
-    font-family: 'Orbitron', 'Smooch Sans', sans-serif;
+    font-family: 'Smooch Sans', 'Orbitron',  sans-serif;
     font-weight: 300;
     text-align: center;
 }
@@ -51,8 +51,8 @@ button:hover {
 .foot-div {
     background-color: rgb(255, 144, 90);
     border-radius: 0 0 10px 10px;
-    margin: 30px auto 0;
-    padding: 10px;
+    margin: 15px auto;
+    padding: 15px;
     width: 80%;
 }
 
@@ -79,6 +79,7 @@ h1 {
 .team-screen form {
     float: left;
     padding: 10%;
+    margin-bottom: 30px;
 }
 
 /* Score board*/
@@ -93,4 +94,11 @@ h1 {
 .scoreboard p {
     float: left;
     width: 33.33%;
+}
+
+.question {
+    font-size: 2rem;
+    font-family: 'Orbitron', sans-serif;
+    width: 80%;
+    margin: 50px auto;
 }

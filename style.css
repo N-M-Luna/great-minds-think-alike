@@ -80,3 +80,17 @@ h1 {
     float: left;
     padding: 10%;
 }
+
+/* Score board*/
+.scoreboard {
+    width: 80%;
+}
+.scoreboard:after{
+    content: "";
+    clear: both;
+    display: table;
+}
+.scoreboard p {
+    float: left;
+    width: 33.33%;
+}

@@ -12,7 +12,6 @@ const gameOverScreen = document.querySelector('.game-over-screen')
 
 const headDiv = document.querySelector('.head-div')
 const footDiv = document.querySelector('.foot-div')
-//const dialogBox = document.querySelectorAll('.dialog-box')
 
 //Functions for switching between screens
 function xOutOf(screenElement) {
@@ -46,7 +45,7 @@ function bringUp(screenElement) {
     }
     screenElement.classList.remove('hidden') 
 
-    //If there is a .dialog-box div, un-hide each child p node after 2 seconds
+    //If there is a .dialog-box div, un-hide each child p node after a second
     const dialog = screenElement.childNodes[1]
 
     if (dialog.classList.contains('dialog-box')) {
@@ -77,7 +76,7 @@ welcomeBtn.addEventListener('click', () => {
 //TEAMS screen 
 
 //Extra stuff
-// have suggestions
+//Have team name suggestions
 
 //Team class definition
 class Team {
@@ -111,7 +110,7 @@ for (let i = 0; i < 2; i++) {
 
             //Update submit button
             e.target.lastElementChild.innerHTML = `Ready!`
-            e.target.lastElementChild.style.backgroundColor = `rgb(218, 87, 90)`
+            e.target.lastElementChild.style.backgroundColor = `rgb(203, 144, 196)`
 
             //If both teams are created, it's time to start the game
             if (teams.length > 1){

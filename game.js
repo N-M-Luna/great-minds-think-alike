@@ -48,6 +48,7 @@ function bringUp(screenElement) {
     //If there is a .dialog-box div, un-hide each child p node after a second
     const dialog = screenElement.childNodes[1]
 
+    //PSEUDO BUG --  timing isn't as intended
     if (dialog.classList.contains('dialog-box')) {
         const pElems = dialog.children
         for (let i = 0; i < pElems.length; i++) {
@@ -60,12 +61,6 @@ function bringUp(screenElement) {
 
 //WELCOME screen
 
-//Extra stuff
-// x seconds after the page loades, h1 element slides up and out of screen
-// x seconds after the p.animation ends, element slides up into the screen
-// x after the h1.hide animation ends, p element slides up and scrolls away.
-// loop again?
-
 //When start game button is clicked, hide the welcome screen and bring up the Teams screen
 const welcomeBtn = document.querySelector('.welcome-btn')
 welcomeBtn.addEventListener('click', () => {
@@ -75,8 +70,7 @@ welcomeBtn.addEventListener('click', () => {
 
 //TEAMS screen 
 
-//Extra stuff
-//Have team name suggestions
+//Extra stuff -- Have team name suggestions
 
 //Team class definition
 class Team {
@@ -93,6 +87,7 @@ class Team {
 //Create teams with user input
 let teams = []
 const teamForms = document.querySelectorAll('.team-screen form')
+//BUG -- After an invalid input is submitted, program doesn't accept anything 
 for (let i = 0; i < 2; i++) {
 
     //When a team inputs their team name...

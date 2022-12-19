@@ -40,7 +40,7 @@ button:hover {
     font-size: 2rem;
 }
 
-/* Frame each screen in a LCARS-inspired interface*/
+/******* Frame each screen in a LCARS-inspired interface *******/
 .head-div {
     background-color: rgb(255, 144, 90);
     border-radius: 10px 10px 0 0;
@@ -75,7 +75,7 @@ h1 {
     /*margin: 80px auto;*/
 }
 
-/* Team-picking */
+/******* Team-picking *******/
 .team-screen {
     height: 200px;
 }
@@ -86,7 +86,7 @@ h1 {
     margin-bottom: 30px;
 }
 
-/* Score board*/
+/******* Score board *******/
 .scoreboard {
     width: 80%;
 }

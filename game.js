@@ -1,5 +1,5 @@
 //GREAT MINDS THINK ALIKE
-//(function () {
+(function () {
 
 //Screen elements
 const welcomeScreen = document.querySelector('.welcome-screen')
@@ -19,6 +19,24 @@ function xOutOf(screenElement) {
 }
 function bringUp(screenElement) {
     //Change colors on start game screen, start round screen and tally screen, and game over screen
+    changeColor(screenElement)
+    screenElement.classList.remove('hidden') 
+
+    //If there is a .dialog-box div, un-hide each child p node after a second
+    const dialog = screenElement.childNodes[1]
+
+    //PSEUDO BUG --  timing isn't as intended
+    if (dialog.classList.contains('dialog-box')) {
+        const pElems = dialog.children
+        for (let i = 0; i < pElems.length; i++) {
+            setTimeout(() => {
+                pElems[i].classList.remove('unwritten')
+            }, 1000);
+        }
+    }
+}
+
+function changeColor(screenElement) {
     switch (screenElement) {
         case startGameScreen:
             headDiv.style.backgroundColor = `rgb(203, 144, 196)`;
@@ -42,20 +60,6 @@ function bringUp(screenElement) {
             break;
         default:
             break;
-    }
-    screenElement.classList.remove('hidden') 
-
-    //If there is a .dialog-box div, un-hide each child p node after a second
-    const dialog = screenElement.childNodes[1]
-
-    //PSEUDO BUG --  timing isn't as intended
-    if (dialog.classList.contains('dialog-box')) {
-        const pElems = dialog.children
-        for (let i = 0; i < pElems.length; i++) {
-            setTimeout(() => {
-                pElems[i].classList.remove('unwritten')
-            }, 1000);
-        }
     }
 }
 
@@ -87,37 +91,35 @@ class Team {
 //Create teams with user input
 let teams = []
 const teamForms = document.querySelectorAll('.team-screen form')
+const nameInput1 = document.querySelector(`#nameTeam1`)
+const nameInput2 = document.querySelector(`#nameTeam2`)
+
 //BUG -- After an invalid input is submitted, program doesn't accept anything 
-for (let i = 0; i < 2; i++) {
 
-    //When a team inputs their team name...
-    teamForms[i].addEventListener('submit', (e) => {
-        e.preventDefault()
+//When a team inputs their team name...
+teamForms[1].addEventListener('submit', (e) => {
+    e.preventDefault()
 
-        //Grab the name submitted by the user
-        const nameInput = document.querySelector(`#nameTeam${i+1}`)
+    //Check if the team names are over 3 chars
+    if (checkLength(nameInput2)) {
 
-        //Check if the team names are over 3 chars
-        if (checkLength(nameInput)) {
+        //Create a team object
+        teams.push(new Team(nameInput2.value))
 
-            //Create a team object
-            teams.push(new Team(nameInput.value))
+        //Update submit button
+        e.target.lastElementChild.innerHTML = `Ready!`
+        e.target.lastElementChild.style.backgroundColor = `rgb(203, 144, 196)`
 
-            //Update submit button
-            e.target.lastElementChild.innerHTML = `Ready!`
-            e.target.lastElementChild.style.backgroundColor = `rgb(203, 144, 196)`
-
-            //If both teams are created, it's time to start the game
-            if (teams.length > 1){
-                xOutOf(teamScreen)
-                bringUp(startGameScreen)
-            }
-
-        } else {
-            nameInput.reportValidity()
+        //If both teams are created, it's time to start the game
+        if (teams.length > 1){
+            xOutOf(teamScreen)
+            bringUp(startGameScreen)
         }
-    })
-}
+    } else {
+        nameInput2.reportValidity()
+        return
+    }
+})
 
 function checkLength(nameSubmission){
     let formIsValid = true 
@@ -219,8 +221,7 @@ startRoundBtn.addEventListener('click', () => {
     
     //QUESTION screen
 
-    //Extra stuff
-    // add timer on screen
+    //Extra stuff -- add timer on screen
 
     //after x seconds, 
     setTimeout(() => {
@@ -286,4 +287,4 @@ function calculateWinner() {
     }
 }
 
-//})();
+})();

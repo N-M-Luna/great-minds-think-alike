@@ -52,7 +52,13 @@ const score2Display = document.querySelector('.score2')
 //When start game button is clicked, hide the welcome screen and bring up the Teams screen
 welcomeBtn.addEventListener('click', () => {
 
+    const placeholder = ['Puffing Hufflepuffs', 'Red Shirt', 'Jedis in Training', 'Time Wimey Quizzy Wizzy']
+
     //Generate a placeholder team name
+    let randomIndex = Math.floor(Math.random()*4)
+    nameInput1.setAttribute('placeholder', placeholder[randomIndex])
+    randomIndex = Math.floor(Math.random()*4)
+    nameInput2.setAttribute('placeholder', placeholder[randomIndex])
     
     //Go to teams screen
     xOutOf(welcomeScreen)
@@ -74,7 +80,6 @@ class Team {
 }
 
 //Create teams with user input
-//Can (Should?) turn these into private variables
 let teams = []
 
 //BUG -- After an invalid input is submitted, program doesn't accept anything 
@@ -131,7 +136,6 @@ teamForms[1].addEventListener('submit', (e) => {
 //START GAME screen
 
 //Start game counter
-//Can (Should?) turn these into private variables
 let roundCounter= 0
 const maxRounds = 4
 let questionQueue
@@ -273,7 +277,7 @@ function checkLength(nameSubmission){
     //Name should be at least three characters long
     if (nameSubmission.value.length < 3) { 
         nameSubmission.validity.valid = false
-        nameSubmission.setCustomValidity(`Where's the rest of your name?`)
+        nameSubmission.setCustomValidity(`Team names should be at least three characters long.`)
         formIsValid = false
     } else {
         nameSubmission.validity.valid = true

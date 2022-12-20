@@ -137,7 +137,7 @@ teamForms[1].addEventListener('submit', (e) => {
 
 //Start game counter
 let roundCounter= 0
-const maxRounds = 4
+const maxRounds = 1
 let questionQueue
 
 //Click on the button to start the game
@@ -210,10 +210,13 @@ tallyForm.addEventListener('submit', (e) => {
             } else {
 
                 //If it's the last round, calculate the winner,
-                const winner = calculateWinner()
+                const winner = calculateWinner(teams)
 
-                //write it to the game over screen, 
-                winnerDisplay.innerHTML = winner
+                if (winner){
+                    winnerDisplay.innerHTML = `Team ${winner} wins!`
+                } else { 
+                    winnerDisplay.innerHTML = `It's a tie!`
+                }
                 
                 //and bring up the game over screen
                 bringUp(gameOverScreen)
@@ -231,7 +234,7 @@ function bringUp(screenElement) {
 
     //If there is a .dialog-box div, un-hide each child p node after a second
     const dialog = screenElement.childNodes[1]
-
+debugger;
     //PSEUDO-BUG --  timing isn't as intended
     if (dialog.classList.contains('dialog-box')) {
         const pElems = dialog.children

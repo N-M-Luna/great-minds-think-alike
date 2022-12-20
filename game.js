@@ -146,7 +146,7 @@ startGameBtn.addEventListener('click', () => {
     //Shuffle question bank
     questionQueue = shuffleArray(questionBank)
 
-    //Write team names on scoreboard and round counter in start round button
+    //Write team name and round counter in start round button
     currentTeam.innerHTML = teams[roundCounter%2].name
     nextRound.innerHTML = roundCounter+1
 
@@ -195,7 +195,7 @@ tallyForm.addEventListener('submit', (e) => {
             //console.log(typeof(tally.value))
 
             //The input (number type) is added to the team in turn's score
-            teams[roundCounter%2].addPoints(newPoints)
+            teams[(roundCounter+1)%2].addPoints(newPoints)
             updateScoreBoard()
 
             //Hide the Tally screen
@@ -203,7 +203,7 @@ tallyForm.addEventListener('submit', (e) => {
 
             //If we're not on the last round, start the next one
             if(roundCounter < maxRounds) {
-                currentTeam.innerHTML = teams[(roundCounter+1)%2].name
+                currentTeam.innerHTML = teams[roundCounter%2].name
                 nextRound.innerHTML = roundCounter+1
                 bringUp(startRoundScreen)
                 tallyForm.reset()

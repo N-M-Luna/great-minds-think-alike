@@ -211,10 +211,10 @@ tallyForm.addEventListener('submit', (e) => {
                 //If it's the last round, calculate the winner,
                 const winner = calculateWinner(teams)
 
-                if (winner){
-                    winnerDisplay.innerHTML = `Team ${winner} wins!`
+                if (winner === 0){
+                    winnerDisplay.innerHTML = `It's a tie!` 
                 } else { 
-                    winnerDisplay.innerHTML = `It's a tie!`
+                    winnerDisplay.innerHTML = `Team ${winner} wins!`
                 }
                 
                 //and bring up the game over screen
@@ -323,7 +323,7 @@ function updateScoreBoard() {
   function calculateWinner(teamRoster) {
     if (teamRoster[0].points > teamRoster[1].points) {
         return teamRoster[0].name
-    } else if (teamRoster[0].points > teamRoster[1].points) {
+    } else if (teamRoster[0].points < teamRoster[1].points) {
         return teamRoster[1].name
     } else {
         return 0

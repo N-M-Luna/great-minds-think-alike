@@ -1,11 +1,18 @@
 //GREAT MINDS THINK ALIKE
 
+//Global variables
 //Screen Elements
 //Game logic (welcome -> teams -> start game -> start round -> question -> tally -> back to start round or game over)
 //Helper functions
 
 //Remove IIFE for Jasmine
 //(function () {
+
+//Global variables and constants
+let teams = []
+let roundCounter= 0
+const maxRounds = 4
+let questionQueue
 
 //Screen elements
 const welcomeScreen = document.querySelector('.welcome-screen')
@@ -79,9 +86,6 @@ class Team {
     }
 }
 
-//Create teams with user input
-let teams = []
-
 //BUG -- After an invalid input is submitted, program doesn't accept anything 
 
 //When a team inputs their team name...
@@ -134,11 +138,6 @@ teamForms[1].addEventListener('submit', (e) => {
 })
 
 //START GAME screen
-
-//Start game counter
-let roundCounter= 0
-const maxRounds = 1
-let questionQueue
 
 //Click on the button to start the game
 startGameBtn.addEventListener('click', () => {

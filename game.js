@@ -1,5 +1,7 @@
 //GREAT MINDS THINK ALIKE
-(function () {
+
+//Remove IIFE for Jasmine
+//(function () {
 
 //Screen elements
 const welcomeScreen = document.querySelector('.welcome-screen')
@@ -121,6 +123,30 @@ teamForms[1].addEventListener('submit', (e) => {
     }
 })
 
+teamForms[0].addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    //Check if the team names are over 3 chars
+    if (checkLength(nameInput1)) {
+
+        //Create a team object
+        teams.push(new Team(nameInput1.value))
+
+        //Update submit button
+        e.target.lastElementChild.innerHTML = `Ready!`
+        e.target.lastElementChild.style.backgroundColor = `rgb(203, 144, 196)`
+
+        //If both teams are created, it's time to start the game
+        if (teams.length > 1){
+            xOutOf(teamScreen)
+            bringUp(startGameScreen)
+        }
+    } else {
+        nameInput1.reportValidity()
+        return
+    }
+})
+
 function checkLength(nameSubmission){
     let formIsValid = true 
     
@@ -164,7 +190,6 @@ function updateScoreBoard() {
 let roundCounter= 0
 const maxRounds = 4
 let questionQueue
-let teamInTurn
 
 //Shuffle a la fisher yates
 function shuffleArray(array) {
@@ -259,6 +284,7 @@ tallyForm.addEventListener('submit', (e) => {
 
             //If we're not on the last round, start the next one
             if(roundCounter < maxRounds) {
+                currentTeam.innerHTML = teams[(roundCounter+1)%2].name
                 nextRound.innerHTML = roundCounter+1
                 bringUp(startRoundScreen)
                 tallyForm.reset()
@@ -279,12 +305,14 @@ tallyForm.addEventListener('submit', (e) => {
         }
 })
 
-function calculateWinner() {
-    if (teams[0].points > teams[1].points) {
-        return teams[0].name
+function calculateWinner(teamRoster) {
+    if (teamRoster[0].points > teamRoster[1].points) {
+        return teamRoster[0].name
+    } else if (teamRoster[0].points > teamRoster[1].points) {
+        return teamRoster[1].name
     } else {
-        return teams[1].name
+        return 0
     }
 }
 
-})();
+//})();

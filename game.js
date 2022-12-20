@@ -1,19 +1,220 @@
 //GREAT MINDS THINK ALIKE
 
+//Screen Elements
+//Game logic (welcome -> teams -> start game -> start round -> question -> tally -> back to start round or game over)
+//Helper functions
+
 //Remove IIFE for Jasmine
 //(function () {
 
 //Screen elements
 const welcomeScreen = document.querySelector('.welcome-screen')
-const teamScreen = document.querySelector('.team-screen')
-const startGameScreen = document.querySelector('.start-game-screen')
-const startRoundScreen = document.querySelector('.start-round-screen')
-const questionScreen = document.querySelector('.question-screen')
-const tallyScreen = document.querySelector('.tally-screen')
-const gameOverScreen = document.querySelector('.game-over-screen')
+const welcomeBtn = document.querySelector('.welcome-btn')
 
+const teamScreen = document.querySelector('.team-screen')
+const teamForms = document.querySelectorAll('.team-screen form')
+const nameInput1 = document.querySelector(`#nameTeam1`)
+const nameInput2 = document.querySelector(`#nameTeam2`)
+
+const startGameScreen = document.querySelector('.start-game-screen')
+const startGameBtn = document.querySelector('.start-game-screen button')
+const currentTeam = document.querySelector('.team-in-turn')
+const nextRound = document.querySelector('.next-round')
+
+const startRoundScreen = document.querySelector('.start-round-screen')
+const startRoundBtn = document.querySelector('.start-round-screen button')
+const question = document.querySelector('.question')
+
+const questionScreen = document.querySelector('.question-screen')
+
+const tallyScreen = document.querySelector('.tally-screen')
+const tallyForm = document.querySelector('.tally-screen form')
+const tally = document.querySelector('#tally')
+
+const gameOverScreen = document.querySelector('.game-over-screen')
+const winnerDisplay = document.querySelector('.winner')
+
+//Screen outline elements
 const headDiv = document.querySelector('.head-div')
 const footDiv = document.querySelector('.foot-div')
+
+//Scoreboard elements
+const scoreboard = document.querySelector('.scoreboard')
+const rndDisplay = document.querySelector('.rnd')
+const player1Display = document.querySelector('.player1')
+const player2Display = document.querySelector('.player2')
+const score1Display = document.querySelector('.score1')
+const score2Display = document.querySelector('.score2')
+
+
+//WELCOME screen
+
+//When start game button is clicked, hide the welcome screen and bring up the Teams screen
+welcomeBtn.addEventListener('click', () => {
+
+    //Generate a placeholder team name
+    
+    //Go to teams screen
+    xOutOf(welcomeScreen)
+    bringUp(teamScreen)
+})
+
+//TEAMS screen 
+
+//Team class definition
+class Team {
+    constructor(name, points = 0) {
+        this.name = name;
+        this.points = points;
+    } 
+    //Create prototype method to add to the team's points
+    addPoints(n) {
+        this.points += n
+    }
+}
+
+//Create teams with user input
+//Can (Should?) turn these into private variables
+let teams = []
+
+//BUG -- After an invalid input is submitted, program doesn't accept anything 
+
+//When a team inputs their team name...
+teamForms[0].addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    //Check if the team names are over 3 chars
+    if (checkLength(nameInput1)) {
+
+        //Create a team object
+        teams.push(new Team(nameInput1.value))
+
+        //Update submit button
+        e.target.lastElementChild.innerHTML = `Ready!`
+        e.target.lastElementChild.style.backgroundColor = `rgb(203, 144, 196)`
+
+        //If both teams are created, it's time to start the game
+        if (teams.length > 1){
+            xOutOf(teamScreen)
+            bringUp(startGameScreen)
+        }
+    } else {
+        nameInput1.reportValidity()
+        return
+    }
+})
+
+teamForms[1].addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    //Check if the team names are over 3 chars
+    if (checkLength(nameInput2)) {
+
+        //Create a team object
+        teams.push(new Team(nameInput2.value))
+
+        //Update submit button
+        e.target.lastElementChild.innerHTML = `Ready!`
+        e.target.lastElementChild.style.backgroundColor = `rgb(203, 144, 196)`
+
+        //If both teams are created, it's time to start the game
+        if (teams.length > 1){
+            xOutOf(teamScreen)
+            bringUp(startGameScreen)
+        }
+    } else {
+        nameInput2.reportValidity()
+        return
+    }
+})
+
+//START GAME screen
+
+//Start game counter
+//Can (Should?) turn these into private variables
+let roundCounter= 0
+const maxRounds = 4
+let questionQueue
+
+//Click on the button to start the game
+startGameBtn.addEventListener('click', () => {
+
+    //Shuffle question bank
+    questionQueue = shuffleArray(questionBank)
+
+    //Write team names on scoreboard and round counter in start round button
+    currentTeam.innerHTML = teams[roundCounter%2].name
+    nextRound.innerHTML = roundCounter+1
+
+    //Start next round
+    xOutOf(startGameScreen)
+    bringUp(startRoundScreen)
+    putUpScoreBoard()
+})
+
+//START ROUND screen
+
+startRoundBtn.addEventListener('click', () => {
+
+    //write the question
+    question.innerHTML = questionQueue[roundCounter] //XBUG -- Uncaught TypeError: Cannot read properties of undefined (reading '0') at HTMLButtonElement .... because I forgot the return statement in the shuffleArray function
+
+    //update scoreboard's round
+    roundCounter++
+    rndDisplay.innerHTML = roundCounter
+
+    //hide Start Round screen and  bring up question screen
+    xOutOf(startRoundScreen)
+    bringUp(questionScreen)
+
+    //Extra stuff -- add timer on screen
+    //Extra stuff -- make the .question-screen into a full screen modal (with a timer) that goes away after x seconds
+
+    //after x seconds, 
+    setTimeout(() => {
+        //hide the question screen and bring up the tally screen
+        xOutOf(questionScreen)
+        bringUp(tallyScreen)
+      }, 6000)
+})
+
+//TALLY screen
+
+//User submits their team's score for the current round.
+tallyForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+
+            //Grab the freshly scored points
+            const newPoints = parseInt(tally.value) 
+            //XBUG -- points were undefined. Even though the tally input is type="number", the value is a string. 
+            //console.log(typeof(teams[roundCounter%2].points))
+            //console.log(typeof(tally.value))
+
+            //The input (number type) is added to the team in turn's score
+            teams[roundCounter%2].addPoints(newPoints)
+            updateScoreBoard()
+
+            //Hide the Tally screen
+            xOutOf(tallyScreen)
+
+            //If we're not on the last round, start the next one
+            if(roundCounter < maxRounds) {
+                currentTeam.innerHTML = teams[(roundCounter+1)%2].name
+                nextRound.innerHTML = roundCounter+1
+                bringUp(startRoundScreen)
+                tallyForm.reset()
+            } else {
+
+                //If it's the last round, calculate the winner,
+                const winner = calculateWinner()
+
+                //write it to the game over screen, 
+                winnerDisplay.innerHTML = winner
+                
+                //and bring up the game over screen
+                bringUp(gameOverScreen)
+            }
+})
 
 //Functions for switching between screens
 function xOutOf(screenElement) {
@@ -27,7 +228,7 @@ function bringUp(screenElement) {
     //If there is a .dialog-box div, un-hide each child p node after a second
     const dialog = screenElement.childNodes[1]
 
-    //PSEUDO BUG --  timing isn't as intended
+    //PSEUDO-BUG --  timing isn't as intended
     if (dialog.classList.contains('dialog-box')) {
         const pElems = dialog.children
         for (let i = 0; i < pElems.length; i++) {
@@ -65,88 +266,7 @@ function changeColor(screenElement) {
     }
 }
 
-//WELCOME screen
-
-//When start game button is clicked, hide the welcome screen and bring up the Teams screen
-const welcomeBtn = document.querySelector('.welcome-btn')
-welcomeBtn.addEventListener('click', () => {
-    xOutOf(welcomeScreen)
-    bringUp(teamScreen)
-})
-
-//TEAMS screen 
-
-//Extra stuff -- Have team name suggestions
-
-//Team class definition
-class Team {
-    constructor(name, points = 0) {
-        this.name = name;
-        this.points = points;
-    } 
-    //Create prototype method to add to the team's points
-    addPoints(n) {
-        this.points += n
-    }
-}
-
-//Create teams with user input
-let teams = []
-const teamForms = document.querySelectorAll('.team-screen form')
-const nameInput1 = document.querySelector(`#nameTeam1`)
-const nameInput2 = document.querySelector(`#nameTeam2`)
-
-//BUG -- After an invalid input is submitted, program doesn't accept anything 
-
-//When a team inputs their team name...
-teamForms[1].addEventListener('submit', (e) => {
-    e.preventDefault()
-
-    //Check if the team names are over 3 chars
-    if (checkLength(nameInput2)) {
-
-        //Create a team object
-        teams.push(new Team(nameInput2.value))
-
-        //Update submit button
-        e.target.lastElementChild.innerHTML = `Ready!`
-        e.target.lastElementChild.style.backgroundColor = `rgb(203, 144, 196)`
-
-        //If both teams are created, it's time to start the game
-        if (teams.length > 1){
-            xOutOf(teamScreen)
-            bringUp(startGameScreen)
-        }
-    } else {
-        nameInput2.reportValidity()
-        return
-    }
-})
-
-teamForms[0].addEventListener('submit', (e) => {
-    e.preventDefault()
-
-    //Check if the team names are over 3 chars
-    if (checkLength(nameInput1)) {
-
-        //Create a team object
-        teams.push(new Team(nameInput1.value))
-
-        //Update submit button
-        e.target.lastElementChild.innerHTML = `Ready!`
-        e.target.lastElementChild.style.backgroundColor = `rgb(203, 144, 196)`
-
-        //If both teams are created, it's time to start the game
-        if (teams.length > 1){
-            xOutOf(teamScreen)
-            bringUp(startGameScreen)
-        }
-    } else {
-        nameInput1.reportValidity()
-        return
-    }
-})
-
+//Function for form validation
 function checkLength(nameSubmission){
     let formIsValid = true 
     
@@ -162,36 +282,7 @@ function checkLength(nameSubmission){
     return formIsValid
 }
 
-//SCOREBOARD element
-
-const scoreboard = document.querySelector('.scoreboard')
-const rndDisplay = document.querySelector('.rnd')
-const player1Display = document.querySelector('.player1')
-const player2Display = document.querySelector('.player2')
-const score1Display = document.querySelector('.score1')
-const score2Display = document.querySelector('.score2')
-
-function putUpScoreBoard() {
-    scoreboard.classList.remove('hidden')
-    player1Display.innerHTML = teams[0].name
-    player2Display.innerHTML = teams[1].name
-    rndDisplay.innerHTML = `${roundCounter}`
-}
-
-function updateScoreBoard() {
-    score1Display.innerHTML = teams[0].points
-    score2Display.innerHTML = teams[1].points
-}
-
-//START GAME screen
-
-//Start game counter
-//Can (Should?) turn these into private variables
-let roundCounter= 0
-const maxRounds = 4
-let questionQueue
-
-//Shuffle a la fisher yates
+//Function to shuffle (a la fisher yates)
 function shuffleArray(array) {
 
     //For each element (last to the first),
@@ -208,104 +299,22 @@ function shuffleArray(array) {
     return array;
   }
 
-//Click on the button to start the game
-const startGameBtn = document.querySelector('.start-game-screen button')
-const currentTeam = document.querySelector('.team-in-turn')
-const nextRound = document.querySelector('.next-round')
-startGameBtn.addEventListener('click', () => {
+  //Scoreboard functions
 
-    //Shuffle question bank
-    questionQueue = shuffleArray(questionBank)
+function putUpScoreBoard() {
+    scoreboard.classList.remove('hidden')
+    player1Display.innerHTML = teams[0].name
+    player2Display.innerHTML = teams[1].name
+    rndDisplay.innerHTML = `${roundCounter}`
+}
 
-    //Write team names on scoreboard and round counter in start round button
-    currentTeam.innerHTML = teams[roundCounter%2].name
-    nextRound.innerHTML = roundCounter+1
+function updateScoreBoard() {
+    score1Display.innerHTML = teams[0].points
+    score2Display.innerHTML = teams[1].points
+}
 
-    //Start next round
-    xOutOf(startGameScreen)
-    bringUp(startRoundScreen)
-    putUpScoreBoard()
-})
-
-//START ROUND screen
-
-const startRoundBtn = document.querySelector('.start-round-screen button')
-const question = document.querySelector('.question')
-startRoundBtn.addEventListener('click', () => {
-
-    //write the question
-    question.innerHTML = questionQueue[roundCounter] // BUG -- Uncaught TypeError: Cannot read properties of undefined (reading '0') at HTMLButtonElement .... because I forgot the return statement in the shuffleArray function
-
-    //update scoreboard's round
-    roundCounter++
-    rndDisplay.innerHTML = roundCounter
-
-    //hide Start Round screen and  bring up question screen
-    xOutOf(startRoundScreen)
-    bringUp(questionScreen)
-    
-    //QUESTION screen
-
-    //Extra stuff -- add timer on screen
-
-    //after x seconds, 
-    setTimeout(() => {
-        //hide the question screen and bring up the tally screen
-        xOutOf(questionScreen)
-        bringUp(tallyScreen)
-      }, 6000)
-})
-
-//TALLY screen
-
-//Target the tally form and its input
-const tallyForm = document.querySelector('.tally-screen form')
-const tally = document.querySelector('#tally')
-
-//User submits their team's score for the current round.
-tallyForm.addEventListener('submit', (e) => {
-        e.preventDefault()
-
-        //Check that the score isn't a negative number...?
-        if (1) { //if (checkValidation(e)) {
-
-            //Grab the freshly scored points
-            const newPoints = parseInt(tally.value) 
-            //BUG -- points were undefined. Even though the tally input is type="number", the value is a string. 
-            //console.log(typeof(teams[roundCounter%2].points))
-            //console.log(typeof(tally.value))
-
-            //The input (number type) is added to the team in turn's score
-            teams[roundCounter%2].addPoints(newPoints)
-            updateScoreBoard()
-
-            //Hide the Tally screen
-            xOutOf(tallyScreen)
-
-            //If we're not on the last round, start the next one
-            if(roundCounter < maxRounds) {
-                currentTeam.innerHTML = teams[(roundCounter+1)%2].name
-                nextRound.innerHTML = roundCounter+1
-                bringUp(startRoundScreen)
-                tallyForm.reset()
-            } else {
-
-                //If it's the last round, calculate the winner,
-                const winner = calculateWinner()
-
-                //write it to the game over screen, 
-                const winnerDisplay = document.querySelector('.winner')
-                winnerDisplay.innerHTML = winner
-                
-                //and bring up the game over screen
-                bringUp(gameOverScreen)
-            }
-        } else {
-            tallyForm.reportValidity()
-        }
-})
-
-function calculateWinner(teamRoster) {
+  //Function that returns the winner team's name 
+  function calculateWinner(teamRoster) {
     if (teamRoster[0].points > teamRoster[1].points) {
         return teamRoster[0].name
     } else if (teamRoster[0].points > teamRoster[1].points) {

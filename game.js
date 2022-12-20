@@ -6,7 +6,7 @@
 //Helper functions
 
 //Remove IIFE for Jasmine
-//(function () {
+(function () {
 
 //Global variables and constants
 let teams = []
@@ -59,12 +59,12 @@ const score2Display = document.querySelector('.score2')
 //When start game button is clicked, hide the welcome screen and bring up the Teams screen
 welcomeBtn.addEventListener('click', () => {
 
-    const placeholder = ['Puffing Hufflepuffs', 'Red Shirt', 'Jedis in Training', 'Time Wimey Quizzy Wizzy']
+    const placeholder = ['Puffing Hufflepuffs', 'Red Shirts', 'Jedis in Training', 'Time Wimey Quizzy Wizzy']
 
     //Generate a placeholder team name
-    let randomIndex = Math.floor(Math.random()*4)
+    let randomIndex = Math.floor(Math.random()*2)
     nameInput1.setAttribute('placeholder', placeholder[randomIndex])
-    randomIndex = Math.floor(Math.random()*4)
+    randomIndex = Math.floor(2 + Math.random()*2)
     nameInput2.setAttribute('placeholder', placeholder[randomIndex])
     
     //Go to teams screen
@@ -233,16 +233,17 @@ function bringUp(screenElement) {
 
     //If there is a .dialog-box div, un-hide each child p node after a second
     const dialog = screenElement.childNodes[1]
-debugger;
-    //PSEUDO-BUG --  timing isn't as intended
+    
     if (dialog.classList.contains('dialog-box')) {
         const pElems = dialog.children
         for (let i = 0; i < pElems.length; i++) {
-            setTimeout(() => {
+            //PSEUDO-BUG --  timing isn't as intended 
+            //setTimeout(() => {
                 pElems[i].classList.remove('unwritten')
-            }, 1000);
+            //}, 1000);
         }
     }
+
 }
 
 function changeColor(screenElement) {
@@ -330,4 +331,4 @@ function updateScoreBoard() {
     }
 }
 
-//})();
+})();
